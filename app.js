@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const bodyParser = require('body-parser')
 const dotenv= require('dotenv');
 const mongoose = require('mongoose')
 
 dotenv.config()
 
 // Database
-mongoose.connect(process.env.MONGO_URI,
+mongoose.connect(process.env.MONGO_URI_OFFICE,
     { useNewUrlParser: true }
 )
 .then(() => {
@@ -23,6 +24,7 @@ const postRoutes = require('./routes/post');
 
 // Middleware: Call Morgan's dev 
 app.use(morgan("dev"));
+app.use(bodyParser.json());
 app.use("/", postRoutes);
 
 // Route
